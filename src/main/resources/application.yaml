@@ -1,0 +1,17 @@
+module:
+  auth:
+    client_id: "GSYfVnYA5XhKjcB1u1YLLt9HASd0D8XD"
+    client_secret: "uIdo1yZHxWqYs_Pr71YvzKkifzEP3v4x5shAOzec1iasWjz7oZKOAeT5UzLg807d"
+    audience: "https://dev-ou7w3qkpvcfwrvmj.us.auth0.com/api/v2/"
+    logout_template: "https://%s/v2/logout?client_id=%s&returnTo=%s"
+    connection:
+      domain: "dev-ou7w3qkpvcfwrvmj.us.auth0.com"
+
+server:
+  port: 8080
+
+spring:
+  data:
+    mongodb:
+      database: game-landing-page
+      uri: mongodb://localhost:27017
