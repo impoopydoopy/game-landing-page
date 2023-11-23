@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Successful Login</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: url('background-texture.png'); /* Add your texture image here */
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.85); /* Slight transparency to show texture */
+            padding: 50px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            position: relative; /* For absolute positioning of the image */
+            text-align: center; /* Center the content */
+        }
+        .login-image {
+            position: absolute; /* Absolute position */
+            top: 15px; /* Adjust as needed */
+            left: 50%; /* Center horizontally */
+            transform: translateX(-50%); /* Center the image horizontally */
+            width: 100px; /* Adjust as needed */
+            height: auto;
+        }
+        .header {
+            color: #5cb85c;
+            margin-top: 80px; /* Adjust as needed to create space between the image and text */
+        }
+        .message {
+            margin-top: 20px;
+        }
+        .button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 30px;
+            font-size: 18px;
+            color: #fff;
+            background-color: #5cb85c;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #4cae4c;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <img src="icon.png" alt="Success Icon" class="login-image"> <!-- Add your image here -->
+    <h1 class="header">Login Successful</h1>
+    <p class="message">Welcome back! Your login was successful.</p>
+    <button class="button" onclick="window.location.href='homepage.html';">Go to Homepage</button>
+</div>
+</body>
+</html>
