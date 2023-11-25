@@ -5,6 +5,108 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Card</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            color: #333;
+        }
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url(../img/background-texture.png);
+            background-size: cover; /* Растягивает изображение, чтобы оно полностью покрывало фон */
+            background-position: center; /* Позиционирует изображение по центру */
+            background-repeat: no-repeat;
+            opacity: 1; /* Adjust the transparency level */
+            z-index: -1; /* Place the pseudo-element behind the content */
+        }
+        .navbar {
+            background: linear-gradient(90deg, #003366, #04AA6D);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            color: white;
+            /* Increased the padding for a bigger navbar */
+            padding: 0 0; /* Top and Bottom padding. Adjust as needed */
+        }
+        .navbar a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            /* Increased padding and font size */
+            padding: 22px 24px; /* Top and Bottom padding. Adjust as needed */
+            font-size: 1.8em; /* Bigger font size */
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .navbar a:hover {
+            background-color: #026752;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        #cardForm {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: calc(100% - 800px); /* Adjust width as necessary */
+            margin: 20px auto;
+        }
+
+        #cardForm label,
+        #cardForm input,
+        #cardForm textarea,
+        #cardForm input[type=submit] {
+            display: block;
+            width: calc(100% - 40px); /* Adjust width as necessary */
+            margin: 10px auto;
+        }
+
+        #cardForm input[type=text],
+        #cardForm input[type=number],
+        #cardForm textarea {
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        #cardForm input[type=submit] {
+            background-color: #04AA6D; /* Green color for the button */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #cardForm input[type=submit]:hover {
+            background-color: #026752;
+        }
+    </style>
+    <div class="navbar">
+        <a href="http://localhost:8080/">Home</a>
+        <a href="http://localhost:8080/cards/all">Game Cards</a>
+        <a href="http://localhost:8080/support">Support Us</a>
+    </div>
 
     <h2>Create Card</h2>
 
@@ -21,9 +123,10 @@
         <input type="submit" value="Create Card">
     </form>
 
-    <<script th:inline="javascript">
-        $(document).ready(function(){
-            $('#cardForm').submit(function(event){
+    <
+    <script th:inline="javascript">
+        $(document).ready(function () {
+            $('#cardForm').submit(function (event) {
                 event.preventDefault();
                 var formData = {
                     cardName: $('#cardName').val(),
@@ -42,44 +145,5 @@
     </script>
 </head>
 <body>
-
-<script>
-    window.addEventListener('DOMContentLoaded', (event) => {
-        document.getElementById('uploadForm').addEventListener('submit', function(e) {
-            // Prevent the traditional form submission
-            e.preventDefault();
-
-            // Create a FormData object, passing in the form
-            var formData = new FormData(this);
-
-            // Use the fetch API to send the form data
-            fetch('/images/upload', {
-                method: 'POST',
-                body: formData
-            })
-                .then(response => {
-                    if(response.ok) {
-                        console.log('Image uploaded successfully');
-                        return response.blob();
-                    } else {
-                        throw new Error('Server returned an error on image upload');
-                    }
-                })
-                .then(blob => {
-                    alert('Upload successful!');
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Upload failed.');
-                });
-        });
-    });
-</script>
-
-<form id="uploadForm" method="POST" enctype="multipart/form-data">
-    <input type="file" name="image" />
-    <button type="submit">Upload</button>
-</form>
-
 </body>
 </html>
