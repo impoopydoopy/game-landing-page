@@ -15,8 +15,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class PlatformUser {
 
     private String id;
+    private String platformId;
     private String email;
     private String firstName;
     private String lastName;
-    private Role role;
+    @Builder.Default
+    private Role role = Role.USER;
 }

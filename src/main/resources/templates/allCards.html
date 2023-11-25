@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card List</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            color: #333;
+        }
+        body::before {
+            content: '';
+            position: fixed; /* Changed from absolute to fixed */
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url(../img/background-texture.png);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 1;
+            z-index: -1;
+        }
+        .card-container {
+            background-color: #859391; /* Light background for the card information */
+            padding: 20px;
+            margin-top: 1%;
+            margin-right: 35%;
+            margin-left: 35%;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .card {
+            flex: 0 1 calc(50% - 20px);
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+            margin-bottom: 20px;
+            padding: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center; /* Align text and inline elements (like buttons) in the center */
+        }
+        .card img {
+            max-width: 100%;
+            height: auto;
+            display: block; /* Makes the image a block-level element */
+            margin: 0 auto; /* Centers the image horizontally */
+        }
+        .view-button {
+            padding: 5px 15px;
+            background-color: #04AA6D;
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+            display: inline-block;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+        .navbar {
+            background: linear-gradient(90deg, #003366, #04AA6D);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            color: white;
+            /* Increased the padding for a bigger navbar */
+            padding: 0 0; /* Top and Bottom padding. Adjust as needed */
+        }
+        .navbar a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            /* Increased padding and font size */
+            padding: 22px 24px; /* Top and Bottom padding. Adjust as needed */
+            font-size: 1.8em; /* Bigger font size */
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .navbar a:hover {
+            background-color: #026752;
+        }
+        .navbar .profile-button {
+            float: right; /* This will align the button to the right */
+            background-color: #026752; /* A distinct color for the profile button */
+            border: none; /* Removes the border if there's any */
+            cursor: pointer; /* Changes the cursor to signify it's clickable */
+        }
+
+        /* Hover effect for profile button */
+        .navbar .profile-button:hover {
+            background-color: #014d40; /* Darken button on hover */
+        }
+
+        #logout {
+            padding: 10px 15px;
+            margin-top: 20px;
+            background-color: #04AA6D;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block; /* Makes the button take the full width of the container */
+        }
+
+        #logout:hover {
+            background-color: #026752;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <a href="http://localhost:8080/">Home</a>
+    <a href="http://localhost:8080/all-cards">Game Cards</a>
+    <a href="http://localhost:8080/support">Support Us</a>
+    <a href="http://localhost:8080/profile" class="profile-button">Profile</a>
+</div>
+
+<div class="card-container" id="cardContainer">
+    <!-- Cards will be inserted here dynamically -->
+</div>
+
+<script>
+    // Fetch all cards from the server
+    fetch('/cards')
+        .then(response => response.json())
+        .then(cards => {
+            const container = document.getElementById('cardContainer');
+            // Create HTML for each card
+            cards.forEach(card => {
+                const cardElement = document.createElement('div');
+                cardElement.className = 'card';
+                cardElement.innerHTML = `
+        <h3>${card.cardName}</h3>
+        <p>Health: ${card.cardHealth}</p>
+        <p>${card.cardDescription}</p>
+        <img src="" alt="${card.cardName}" />
+        </div>
+            <button id="logout" class="view-button" data-id="${card.id}">View</button>
+        </div>
+      `;
+                container.appendChild(cardElement);
+
+                // Fetch image for each card
+                fetch(`/images/download/${card.imageId}`)
+                    .then(response => response.blob())
+                    .then(blob => {
+                        const imageUrl = URL.createObjectURL(blob);
+                        cardElement.querySelector('img').src = imageUrl;
+                    });
+
+                // Add click event listener to the view button
+                const viewButton = cardElement.querySelector('.view-button');
+                viewButton.addEventListener('click', function() {
+                    const cardId = this.getAttribute('data-id');
+                    window.location.href = `/get-card/${cardId}`;
+                });
+            });
+        });
+</script>
+
+</body>
+</html>

@@ -1,26 +1,45 @@
 package com.example.gamelandingpage.api.controller;
 
 import com.example.gamelandingpage.repository.ImageRepository;
+import com.example.gamelandingpage.repository.UserRepository;
 import com.example.gamelandingpage.repository.model.Card;
+import com.example.gamelandingpage.repository.model.PlatformUser;
+import com.example.gamelandingpage.repository.model.data.Role;
 import com.example.gamelandingpage.service.CardService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import static com.example.gamelandingpage.service.utils.UrlBuilder.SUCCESS_URI_PREFIX;
-
+@Log4j2
 @Controller
 @RequiredArgsConstructor
 public class HomeController {
 
     private final ImageRepository imageRepository;
     private final CardService cardService;
+    private final UserRepository userRepository;
 
     @GetMapping("/")
     public String home(Model model) {
         return "index.html";
+    }
+
+    @GetMapping("/profile/view")
+    public String userProfile(Model model) {
+        String platformId = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        log.info("Getting profile for id: " + platformId);
+        PlatformUser currentUser = userRepository.getPlatformUserByPlatformId(platformId).orElseThrow();
+
+        model.addAttribute("user", currentUser);
+
+        if (Role.ADMIN.equals(currentUser.getRole())) {
+            model.addAttribute("isAdmin", true);
+        }
+        return "profile";
     }
 
     @GetMapping(value = "/img")
@@ -47,5 +66,10 @@ public class HomeController {
         }
 
         return "cardView";
+    }
+
+    @GetMapping(value = "/all-cards")
+    public String cards(Model model) {
+        return "allCards";
     }
 }

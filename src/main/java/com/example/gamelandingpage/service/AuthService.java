@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.TestingAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -57,6 +58,7 @@ public class AuthService {
                 userManagementService.createUser(PlatformUser.builder()
                         .firstName(decodedJwt.getClaim("given_name").asString())
                         .lastName(decodedJwt.getClaim("family_name").asString())
+                        .platformId(decodedJwt.getClaim("sub").asString())
                         .email(email)
                         .build());
             }

@@ -59,4 +59,8 @@ public class CardService {
                 .cardName(request.getCardName())
                 .build());
     }
+
+    public List<Card> getAllCards() {
+        return cardRepository.findAll();
+    }
 }

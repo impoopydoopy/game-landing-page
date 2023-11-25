@@ -91,14 +91,26 @@
                 flex-basis: 100%;
             }
         }
+        .navbar .profile-button {
+            float: right; /* This will align the button to the right */
+            background-color: #026752; /* A distinct color for the profile button */
+            border: none; /* Removes the border if there's any */
+            cursor: pointer; /* Changes the cursor to signify it's clickable */
+        }
+
+        /* Hover effect for profile button */
+        .navbar .profile-button:hover {
+            background-color: #014d40; /* Darken button on hover */
+        }
     </style>
 </head>
 <body>
 
 <div class="navbar">
     <a href="http://localhost:8080/">Home</a>
-    <a href="http://localhost:8080/cards/all">Game Cards</a>
+    <a href="http://localhost:8080/all-cards">Game Cards</a>
     <a href="http://localhost:8080/support">Support Us</a>
+    <a href="http://localhost:8080/profile" class="profile-button">Profile</a>
 </div>
 
 <div class="news-section">

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- ... existing head elements ... -->
+    <title>User Profile</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            color: #333;
+        }
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url(../img/background-texture.png);
+            background-size: cover; /* Растягивает изображение, чтобы оно полностью покрывало фон */
+            background-position: center; /* Позиционирует изображение по центру */
+            background-repeat: no-repeat;
+            opacity: 1; /* Adjust the transparency level */
+            z-index: -1; /* Place the pseudo-element behind the content */
+        }
+        #image-container img {
+            width: auto;   /* Set the width to your desired standard size */
+            height: 500px;   /* This will keep the aspect ratio intact */
+            display: block; /* This will prevent inline spacing issues */
+            margin: 0 auto; /* This centers the image in the container if the container is wider */
+        }
+
+        /* Additional style for the card information */
+        #cardInfo {
+            background-color: #f9f9f9; /* Light background for the card information */
+            padding: 20px;
+            margin-top: 1%;
+            margin-right: 35%;
+            margin-left: 35%;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        #cardInfo h2 {
+            color: #003366; /* Dark blue color for the card name */
+            margin-top: 10px;
+        }
+
+        #cardInfo p {
+            color: #555; /* Darker text color for better readability */
+            line-height: 1.6;
+        }
+
+        .custom-file-upload:hover {
+            background-color: #026752;
+        }
+
+        #uploadForm button {
+            background-color: #04AA6D; /* Green color for the button */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: inherit; /* Use the same font size as the label */
+            line-height: normal; /* Adjust line height to match the label */
+        }
+
+        #uploadForm button:hover {
+            background-color: #026752;
+        }
+        .navbar {
+            background: linear-gradient(90deg, #003366, #04AA6D);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            color: white;
+            /* Increased the padding for a bigger navbar */
+            padding: 0 0; /* Top and Bottom padding. Adjust as needed */
+        }
+        .navbar a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            /* Increased padding and font size */
+            padding: 22px 24px; /* Top and Bottom padding. Adjust as needed */
+            font-size: 1.8em; /* Bigger font size */
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .navbar a:hover {
+            background-color: #026752;
+        }
+        .navbar .profile-button {
+            float: right; /* This will align the button to the right */
+            background-color: #026752; /* A distinct color for the profile button */
+            border: none; /* Removes the border if there's any */
+            cursor: pointer; /* Changes the cursor to signify it's clickable */
+        }
+
+        /* Hover effect for profile button */
+        .navbar .profile-button:hover {
+            background-color: #014d40; /* Darken button on hover */
+        }
+        .profile-section {
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .profile-card {
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            width: 300px; /* Fixed width for profile card */
+        }
+
+        .profile-card h2 {
+            color: #003366;
+            margin-bottom: 15px;
+        }
+
+        .profile-card p {
+            line-height: 1.6;
+            color: #555;
+            margin: 10px 0; /* Add margin to profile info paragraphs */
+        }
+
+        #profileRole {
+            font-weight: bold;
+        }
+
+        #createCardButton {
+            padding: 10px 15px;
+            margin-top: 20px;
+            background-color: #04AA6D;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block; /* Makes the button take the full width of the container */
+        }
+
+        #createCardButton:hover {
+            background-color: #026752;
+        }
+
+        #logout {
+            padding: 10px 15px;
+            margin-top: 20px;
+            background-color: #04AA6D;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block; /* Makes the button take the full width of the container */
+        }
+
+        #logout:hover {
+            background-color: #026752;
+        }
+
+        /* Responsive design for smaller screens */
+        @media (max-width: 768px) {
+            .profile-card {
+                width: auto; /* Makes the profile card full width on smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <a href="http://localhost:8080/">Home</a>
+    <a href="http://localhost:8080/all-cards">Game Cards</a>
+    <a href="http://localhost:8080/support">Support Us</a>
+    <a href="http://localhost:8080/profile" class="profile-button">Profile</a>
+</div>
+
+<div class="profile-section">
+    <div class="profile-card">
+        <h2>Profile Information</h2>
+        <p><strong>Name:</strong> <span th:text="${user.firstName}"></span></p>
+        <p><strong>Surname:</strong> <span th:text="${user.lastName}"></span></p>
+        <p><strong>Email:</strong> <span th:text="${user.email}"></span></p>
+        <p><strong>Role:</strong> <span th:text="${user.role}"></span></p>
+        <div th:if="${isAdmin} == true">
+            <button id="createCardButton" onclick="window.location.href='http://localhost:8080/create-card';">Create Game Card</button>
+        </div>
+        <button id="logout" onclick="window.location.href='https://dev-ou7w3qkpvcfwrvmj.us.auth0.com/v2/logout?client_id=GSYfVnYA5XhKjcB1u1YLLt9HASd0D8XD&returnTo=http://localhost:8080/callback-logout';">Log out</button>
+    </div>
+</div>
+
+<script>
+    // Script to hide the Create Card button if the user is not an admin
+    window.onload = function() {
+        var role = document.getElementById('profileRole').textContent;
+        var createCardButton = document.getElementById('createCardButton');
+        if(role !== 'ADMIN') {
+            createCardButton.style.display = 'none';
+        }
+    };
+</script>
+
+</body>
+</html>

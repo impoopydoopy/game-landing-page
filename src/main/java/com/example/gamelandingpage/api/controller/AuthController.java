@@ -8,6 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -55,5 +56,14 @@ public class AuthController {
         return new ModelAndView("success.html");
     }
 
+    @GetMapping("/profile")
+    public void getAuthorization(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String platformId = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        if(StringUtils.equals(platformId, "anonymousUser")) {
+            response.sendRedirect(authService.buildLoginUrl(request, response));
+        } else {
+            response.sendRedirect("http://localhost:8080/profile/view");
+        }
+    }
 }
 

@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/cards")
 @RequiredArgsConstructor
@@ -17,5 +19,10 @@ public class CardController {
     @PostMapping()
     public ResponseEntity<Card> createCard(@RequestBody CardCreateRequest request) {
         return ResponseEntity.ok(cardService.createCard(request));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Card>> getAllCards() {
+        return ResponseEntity.ok(cardService.getAllCards());
     }
 }
