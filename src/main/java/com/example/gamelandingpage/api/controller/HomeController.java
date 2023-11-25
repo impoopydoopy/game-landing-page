@@ -20,7 +20,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(Model model) {
-        return "index";
+        return "index.html";
     }
 
     @GetMapping(value = "/img")
@@ -47,10 +47,5 @@ public class HomeController {
         }
 
         return "cardView";
-    }
-
-    @GetMapping(value = SUCCESS_URI_PREFIX)
-    public String success(Model model) {
-        return  "success";
     }
 }
