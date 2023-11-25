@@ -29,12 +29,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.
                 cors()
                 .and()
-                .csrf().disable();
-//                .authorizeRequests()
-//                .antMatchers("/callback", "/login", "/proceed/logout", "/user", "/callback-logout", "/", "/**/img/**")
-//                .permitAll()
-//                .anyRequest()
-//                .authenticated();
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/callback", "/login", "/proceed/logout", "/user", "/callback-logout", "/", "/**/img/**")
+                .permitAll()
+                .anyRequest()
+                .authenticated();
     }
 
     @Bean
