@@ -26,4 +26,4 @@ spring:
   data:
     mongodb:
       database: game-landing-page
-      uri: mongodb://localhost:27017
+      uri: ${SPRING_DATA_MONGODB_URI}
