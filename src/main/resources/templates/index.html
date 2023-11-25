@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-image: url('background-texture.png');
+            background-image: url('../static/img/background-texture.png');
             background-size: cover;
             background-repeat: no-repeat;
             opacity: 1; /* Adjust the transparency level */
@@ -104,12 +104,12 @@
 
 <div class="news-section">
     <div class="news-article">
-        <img src="news-image1.jpg" alt="News Image">
+        <img src="../static/img/news-image1.jpg" alt="News Image">
         <h2>Latest News Title</h2>
         <p>Some description for the latest news...</p>
     </div>
     <div class="news-article">
-        <img src="news-image2.jpg" alt="News Image">
+        <img src="../static/img/news-image2.jpg" alt="News Image">
         <h2>Another News Title</h2>
         <p>Some other news description...</p>
     </div>

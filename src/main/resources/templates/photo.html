@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="eng">
+<head>
+    <title>Photo Gallery</title>
+    <!-- Include your CSS here -->
+</head>
+<body>
+
+ <script>
+     window.addEventListener('DOMContentLoaded', (event) => {
+         document.getElementById('uploadForm').addEventListener('submit', function(e) {
+             // Prevent the traditional form submission
+             e.preventDefault();
+
+             // Create a FormData object, passing in the form
+             var formData = new FormData(this);
+
+             // Use the fetch API to send the form data
+             fetch('/images/upload', {
+                 method: 'POST',
+                 body: formData
+             })
+                 .then(response => {
+                     if(response.ok) {
+                         console.log('Image uploaded successfully');
+                         return response.blob();
+                     } else {
+                         throw new Error('Server returned an error on image upload');
+                     }
+                 })
+                 .then(blob => {
+                     alert('Upload successful!');
+                 })
+                 .catch(error => {
+                     console.error('Error:', error);
+                     alert('Upload failed.');
+                 });
+         });
+     });
+ </script>
+
+ <form id="uploadForm" method="POST" enctype="multipart/form-data">
+     <input type="file" name="image" />
+     <button type="submit">Upload</button>
+ </form>
+
+ <script>
+     document.addEventListener('DOMContentLoaded', function() {
+         fetch('/images')
+             .then(response => response.json())
+             .then(images => {
+                 if (images.length > 0) {
+                     const container = document.getElementById('image-container');
+                     images.forEach(image => {
+                         const imgElement = document.createElement('img');
+                         imgElement.src = '/images/download/' + image.id;
+                         imgElement.alt = image.name;
+                         container.appendChild(imgElement);
+
+                         const nameSpan = document.createElement('span');
+                         nameSpan.textContent = image.name;
+                         container.appendChild(nameSpan);
+                     });
+                 }
+             })
+             .catch(error => console.error('Error:', error));
+     });
+ </script>
+
+ <div id="image-container">
+     <!-- Images will be inserted here by JavaScript -->
+ </div>
+
+</body>
+</html>

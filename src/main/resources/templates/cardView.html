@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Card</title>
+</head>
+<body>
+
+<!-- Other HTML content -->
+<div id="cardInfo">
+    <h2 th:text="${cardName}"></h2>
+    <p th:text="'Health: ' + ${cardHealth}"></p>
+    <p th:text="${cardDescription}"></p>
+</div>
+<!-- Other HTML content -->
+
+<script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+        document.getElementById('uploadForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            var id = [[${id}]];
+            var formData = new FormData(this);
+
+            // Use the fetch API to send the form data
+            fetch('/images/upload/' + id, {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => {
+                    if(response.ok) {
+                        console.log('Image uploaded successfully');
+                        return response.blob();
+                    } else {
+                        throw new Error('Server returned an error on image upload');
+                    }
+                })
+                .then(blob => {
+                    alert('Upload successful!');
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Upload failed.');
+                });
+        });
+    });
+</script>
+
+<form id="uploadForm" method="POST" enctype="multipart/form-data">
+    <input type="file" name="image" />
+    <button type="submit">Upload</button>
+</form>
+
+</body>
+</html>

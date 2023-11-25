@@ -7,10 +7,22 @@ module:
     connection:
       domain: "dev-ou7w3qkpvcfwrvmj.us.auth0.com"
 
+okta:
+  oauth2:
+    issuer: https://dev-ou7w3qkpvcfwrvmj.us.auth0.com/
+    client-id: "GSYfVnYA5XhKjcB1u1YLLt9HASd0D8XD"
+    client-secret: "uIdo1yZHxWqYs_Pr71YvzKkifzEP3v4x5shAOzec1iasWjz7oZKOAeT5UzLg807d"
+
 server:
   port: 8080
 
+logging.level.org.springframework.web: DEBUG
+
 spring:
+  servlet:
+    multipart:
+      max-request-size: 50MB
+      max-file-size: 50MB
   data:
     mongodb:
       database: game-landing-page

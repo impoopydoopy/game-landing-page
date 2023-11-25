@@ -13,7 +13,7 @@ public class UrlBuilder {
     private static final String LOGIN = "/login";
     private static final String LOGOUT = "/proceed/logout";
     private static final String ROOT_DOMAIN = "http://localhost:8080";
-    private static final String MAIN_PAGE_PREFIX = "/";
+    private static final String MAIN_PAGE_PREFIX = "/app";
 
 
     private final String callbackLoginUri;

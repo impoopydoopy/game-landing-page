@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Card</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <h2>Create Card</h2>
+
+    <form id="cardForm">
+        <label for="cardName">Card Name:</label><br>
+        <input type="text" id="cardName" name="cardName" required><br>
+
+        <label for="cardHealth">Card Health:</label><br>
+        <input type="number" id="cardHealth" name="cardHealth" required><br>
+
+        <label for="cardDescription">Card Description:</label><br>
+        <textarea id="cardDescription" name="cardDescription" required></textarea><br>
+
+        <input type="submit" value="Create Card">
+    </form>
+
+    <<script th:inline="javascript">
+        $(document).ready(function(){
+            $('#cardForm').submit(function(event){
+                event.preventDefault();
+                var formData = {
+                    cardName: $('#cardName').val(),
+                    cardHealth: $('#cardHealth').val(),
+                    cardDescription: $('#cardDescription').val()
+                };
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/cards', // Replace with the URL to your API.
+                    contentType: 'application/json',
+                    data: JSON.stringify(formData)
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+
+<script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+        document.getElementById('uploadForm').addEventListener('submit', function(e) {
+            // Prevent the traditional form submission
+            e.preventDefault();
+
+            // Create a FormData object, passing in the form
+            var formData = new FormData(this);
+
+            // Use the fetch API to send the form data
+            fetch('/images/upload', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => {
+                    if(response.ok) {
+                        console.log('Image uploaded successfully');
+                        return response.blob();
+                    } else {
+                        throw new Error('Server returned an error on image upload');
+                    }
+                })
+                .then(blob => {
+                    alert('Upload successful!');
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Upload failed.');
+                });
+        });
+    });
+</script>
+
+<form id="uploadForm" method="POST" enctype="multipart/form-data">
+    <input type="file" name="image" />
+    <button type="submit">Upload</button>
+</form>
+
+</body>
+</html>
